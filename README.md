@@ -36,7 +36,7 @@ Galaxy Graph turns those signals into a navigable architecture map. Core renderi
 - `@galaxy-graph/adapters` — Encore, Grails, Stryker, and semantic JSDoc/TSDoc extraction utilities.
 - `@galaxy-graph/cli` — `galaxy-graph generate` command for producing graph JSON from a repo.
 - `@galaxy-graph/example-basic` — minimal Vite app that renders the sample graph.
-- `@galaxy-graph/example-generated` - generic Vite viewer used by generation scripts to build standalone HTML for any adapter dataset.
+- `@galaxy-graph/example-standalone-viewer` - Vite viewer used by generation scripts to build standalone HTML for any adapter dataset.
 
 ## Quick start
 

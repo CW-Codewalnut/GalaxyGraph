@@ -9,9 +9,9 @@ import { describe, expect, it } from "vitest";
 const execFileAsync = promisify(execFile);
 const fixture = fileURLToPath(new URL("./fixtures/encore-mini", import.meta.url));
 const repoRoot = fileURLToPath(new URL("..", import.meta.url));
-const viewerDataset = fileURLToPath(new URL("../examples/generated/src/generated/galaxy-graph-dataset.json", import.meta.url));
+const viewerDataset = fileURLToPath(new URL("../examples/standalone-viewer/src/generated/galaxy-graph-dataset.json", import.meta.url));
 
-describe("generate-graph script", () => {
+describe("generate standalone galaxy graph script", () => {
   it("builds standalone HTML from a registered adapter without leaving generated data in the viewer fixture", async () => {
     const dir = await mkdtemp(join(tmpdir(), "galaxy-graph-visual-"));
     const before = await readFile(viewerDataset, "utf8");
@@ -20,7 +20,7 @@ describe("generate-graph script", () => {
       await execFileAsync(
         process.execPath,
         [
-          "scripts/generate-graph.mjs",
+          "scripts/generate-standalone-galaxy-graph.mjs",
           "--adapter",
           "encore",
           "--root",

@@ -71,7 +71,7 @@ try {
 
   runNpm([
     "-w",
-    "@galaxy-graph/example-generated",
+    "@galaxy-graph/example-standalone-viewer",
     "run",
     "build",
     "--",
@@ -82,7 +82,7 @@ try {
 
   copyFileSync(datasetPath, join(outDir, publicDatasetName));
   run(process.execPath, [
-    join(toolRoot, "scripts", "make-standalone-html.mjs"),
+    join(toolRoot, "scripts", "inline-vite-assets-for-standalone-html.mjs"),
     outDir,
     "--dataset",
     datasetPath,

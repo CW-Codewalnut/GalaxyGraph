@@ -1,12 +1,12 @@
 {
-  "name": "@galaxy-graph/example-generated",
+  "name": "@galaxy-graph/example-standalone-viewer",
   "private": true,
   "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
-    "build:standalone": "vite build && node ../../scripts/make-standalone-html.mjs dist",
+    "build:standalone": "vite build && node ../../scripts/inline-vite-assets-for-standalone-html.mjs dist",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
@@ -17,5 +17,5 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
-  "description": "Generated Galaxy Graph visual viewer"
+  "description": "Standalone Galaxy Graph viewer used by adapter generation scripts"
 }

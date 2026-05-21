@@ -4,7 +4,7 @@ import { basename, dirname, join } from "node:path";
 const [, , distDirArg, ...rawArgs] = process.argv;
 
 if (!distDirArg) {
-  console.error("Usage: node scripts/make-standalone-html.mjs <dist-dir> [--dataset <graph.json>] [--title <title>]");
+  console.error("Usage: node scripts/inline-vite-assets-for-standalone-html.mjs <dist-dir> [--dataset <graph.json>] [--title <title>]");
   process.exit(1);
 }
 
