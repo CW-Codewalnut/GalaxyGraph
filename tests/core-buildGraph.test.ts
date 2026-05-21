@@ -9,6 +9,7 @@ const dataset: GalaxyGraphDataset = {
   contracts: [],
   topics: [],
   mutation: { aggregate: { killed: 1, survived: 0, total: 1, score: 100 }, services: { api: { killed: 1, survived: 0, total: 1, score: 100 } }, endpoints: { "api:listUsers": { svc: "api", fnName: "listUsers", killed: 1, survived: 0, total: 1, score: 100 } } },
+  colors: { api: "#123456" },
 };
 
 describe("buildGraph", () => {
@@ -19,5 +20,6 @@ describe("buildGraph", () => {
     expect(graph.nodes.map((n) => n.id)).toContain("test:listUsers");
     expect(graph.links).toContainEqual(expect.objectContaining({ source: "svc:api", target: "ep:api:listUsers", kind: "contains" }));
     expect(graph.nodes.find((n) => n.id === "ep:api:listUsers")?.mutation?.score).toBe(100);
+    expect(graph.nodes.find((n) => n.id === "svc:api")?.color).toBe("#123456");
   });
 });

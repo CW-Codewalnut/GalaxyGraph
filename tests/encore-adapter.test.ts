@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
+import { fileURLToPath } from "node:url";
 import { generateEncoreDataset, parseEncoreContracts, parseEncoreContractTests, parseEncoreEndpoints, parseEncoreTopics } from "../packages/adapters/src/encore";
 
-const fixture = new URL("./fixtures/encore-mini", import.meta.url).pathname;
+const fixture = fileURLToPath(new URL("./fixtures/encore-mini", import.meta.url));
 
 describe("Encore adapter", () => {
   it("discovers services, endpoints, topics, contracts, tests, and mutation data", async () => {

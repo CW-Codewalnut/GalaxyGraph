@@ -1,6 +1,6 @@
 # Adapter Architecture
 
-Adapters convert a backend into Galaxy Graph's normalized schema.
+Adapters convert a backend into Galaxy Graph's normalized schema. The renderer and graph-building code are language-independent; language and framework knowledge belongs in adapters.
 
 A mature adapter should discover:
 
@@ -15,8 +15,17 @@ A mature adapter should discover:
 Initial adapters:
 
 - `encore`: scans Encore.dev TypeScript services.
+- `grails`: scans Grails controllers, services, URL mappings, Spock tests, and client API calls.
 - `stryker`: reads Stryker JSON reports and converts mutation scores.
 - `jsdoc`: extracts `@summary`, `@why`, `@flow`, `@story`, `@category`.
+
+Adding a framework adapter:
+
+1. emit `GalaxyGraphDataset` from the framework's services, endpoints, tests, contracts, topics, and confidence signals;
+2. keep framework-specific parsing inside the adapter package;
+3. expose configurable path/layout options instead of project-specific constants;
+4. add it to `packages/adapters/src/registry.ts` so the CLI can discover it without branching;
+5. add fixture tests that cover the framework's normal project layouts.
 
 Planned adapters:
 

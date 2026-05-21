@@ -8,7 +8,7 @@
 [![npm](https://img.shields.io/badge/npm-pre--publish-orange)](#packages)
 [![License: MIT](https://img.shields.io/github/license/BenSheridanEdwards/GalaxyGraph)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-ready-3178c6)](https://www.typescriptlang.org/)
-[![Adapters](https://img.shields.io/badge/adapters-Encore%20%7C%20Stryker%20%7C%20JSDoc-7c3aed)](#adapters)
+[![Adapters](https://img.shields.io/badge/adapters-Encore%20%7C%20Grails%20%7C%20Stryker%20%7C%20JSDoc-7c3aed)](#adapters)
 
 </div>
 
@@ -33,9 +33,10 @@ Galaxy Graph turns those signals into a navigable architecture map. Core renderi
 ## Packages
 
 - `@galaxy-graph/core` — React + Three.js graph renderer, normalized schema, and public-safe sample data.
-- `@galaxy-graph/adapters` — Encore, Stryker, and semantic JSDoc/TSDoc extraction utilities.
+- `@galaxy-graph/adapters` — Encore, Grails, Stryker, and semantic JSDoc/TSDoc extraction utilities.
 - `@galaxy-graph/cli` — `galaxy-graph generate` command for producing graph JSON from a repo.
 - `@galaxy-graph/example-basic` — minimal Vite app that renders the sample graph.
+- `@galaxy-graph/example-generated` - generic Vite viewer used by generation scripts to build standalone HTML for any adapter dataset.
 
 ## Quick start
 
@@ -70,6 +71,55 @@ Current Encore defaults:
 - tests: `*.test.ts` / `*.contract.*` files with optional semantic JSDoc
 - mutation report: `reports/mutation/mutation.json`
 
+Generate a normalized dataset from a Grails monolith with web/mobile API clients:
+
+```bash
+npx galaxy-graph generate \
+  --adapter grails \
+  --root /path/to/your/repo \
+  --out galaxy-graph.json
+```
+
+Generate a static visual graph for any Grails project:
+
+```bash
+npm run generate:grails -- \
+  --root /path/to/your/grails/repo \
+  --out-dir /path/to/output/galaxy-graph \
+  --title "My API Galaxy"
+```
+
+The output folder contains a standalone `index.html` and `galaxy-graph-dataset.json`.
+
+Generate a static visual graph with any registered adapter:
+
+```bash
+npm run generate:graph -- \
+  --adapter grails \
+  --root /path/to/your/repo \
+  --out-dir /path/to/output/galaxy-graph
+```
+
+Current Grails defaults:
+
+- controllers: `server/grails-app/controllers/**/*.groovy`
+- backend services/utilities: `server/grails-app/services/**/*.groovy` plus controller utilities
+- web client calls: `web/src/**/*.{js,jsx,ts,tsx}`
+- mobile client calls: `mobile/src/**/*.{js,jsx,ts,tsx}`
+- tests: `server/src/test/**/*.groovy` and `server/src/integration-test/**/*.groovy`
+- URL mappings: any `UrlMappings.groovy` under `grails-app`
+
+Adapter-specific options can be passed through the CLI:
+
+```bash
+npx galaxy-graph generate \
+  --adapter grails \
+  --root /path/to/your/repo \
+  --adapter-option controllersDir=server/grails-app/controllers \
+  --adapter-option packageDomainRoot=com.example.apps \
+  --out galaxy-graph.json
+```
+
 ## React usage
 
 ```tsx
@@ -88,8 +138,11 @@ The default render uses a small synthetic sample dataset. Apps can later pass ge
 Adapters emit the normalized `GalaxyGraphDataset` schema. The current MVP includes:
 
 - **Encore adapter** — discovers services, endpoints, topics, contracts, and contract tests from TypeScript source.
+- **Grails adapter** — discovers controllers, service classes, URL mappings, client API consumers, Spock specs, direct-call dependencies, and external integration fingerprints.
 - **Stryker adapter** — aggregates mutation reports by service and maps file-level mutation results to endpoint keys where source context is available.
 - **JSDoc/TSDoc semantic extractor** — turns human intent comments into node narratives.
+
+The renderer is intentionally language-independent. New languages and frameworks should be added as adapters that emit the same schema, then registered in `packages/adapters/src/registry.ts`.
 
 Supported tags:
 

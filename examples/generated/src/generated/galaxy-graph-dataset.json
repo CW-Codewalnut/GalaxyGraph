@@ -1,0 +1,38 @@
+{
+  "services": [
+    {
+      "id": "svc:api",
+      "svc": "api",
+      "file": "services/api",
+      "narrative": {
+        "summary": "Sample API boundary used by the generated viewer."
+      }
+    }
+  ],
+  "endpoints": [
+    {
+      "id": "ep:api:listItems",
+      "svc": "api",
+      "fnName": "listItems",
+      "noun": "List Items",
+      "method": "GET",
+      "path": "/items"
+    }
+  ],
+  "tests": [],
+  "contracts": [],
+  "topics": [],
+  "mutation": {
+    "aggregate": {
+      "killed": 0,
+      "survived": 0,
+      "total": 0,
+      "score": 0
+    },
+    "services": {},
+    "endpoints": {}
+  },
+  "colors": {
+    "api": "#54c1ff"
+  }
+}

@@ -8,10 +8,12 @@
     "examples/*"
   ],
   "scripts": {
-    "build": "npm -w @galaxy-graph/core run build && npm -w @galaxy-graph/adapters run build && npm -w @galaxy-graph/cli run build && npm -w @galaxy-graph/example-basic run build",
-    "typecheck": "npm -w @galaxy-graph/core run typecheck && npm -w @galaxy-graph/adapters run typecheck && npm -w @galaxy-graph/cli run typecheck && npm -w @galaxy-graph/example-basic run typecheck",
+    "build": "npm -w @galaxy-graph/core run build && npm -w @galaxy-graph/adapters run build && npm -w @galaxy-graph/cli run build && npm -w @galaxy-graph/example-basic run build && npm -w @galaxy-graph/example-generated run build",
+    "typecheck": "npm -w @galaxy-graph/core run typecheck && npm -w @galaxy-graph/adapters run typecheck && npm -w @galaxy-graph/cli run typecheck && npm -w @galaxy-graph/example-basic run typecheck && npm -w @galaxy-graph/example-generated run typecheck",
     "test": "vitest run",
     "dev": "npm -w @galaxy-graph/example-basic run dev",
+    "generate:graph": "node scripts/generate-graph.mjs",
+    "generate:grails": "node scripts/generate-graph.mjs --adapter grails",
     "test:watch": "vitest",
     "audit": "npm audit --audit-level=moderate",
     "pack:dry-run": "npm -w @galaxy-graph/core pack --dry-run && npm -w @galaxy-graph/adapters pack --dry-run && npm -w @galaxy-graph/cli pack --dry-run"
@@ -25,7 +27,7 @@
     "vite": "^7.2.4",
     "vitest": "^4.0.14"
   },
-  "description": "Interactive backend architecture, confidence, and service-intent maps for TypeScript systems.",
+  "description": "Interactive backend architecture, confidence, and service-intent maps for backend systems.",
   "license": "MIT",
   "author": "Ben Sheridan Edwards",
   "repository": {
@@ -41,6 +43,7 @@
     "visualization",
     "backend",
     "encore",
+    "grails",
     "stryker",
     "mutation-testing",
     "typescript",

@@ -26,6 +26,7 @@ export function buildGraph(dataset?: GalaxyGraphDataset): GraphData {
   const contracts = dataset?.contracts ?? CONTRACTS;
   const topicsInput = dataset?.topics ?? TOPICS;
   const mutation = dataset?.mutation ?? MUTATION;
+  const serviceColor = (svc: string) => dataset?.colors?.[svc] ?? COLORS[svc];
 
   // per-endpoint test list and coverage proxy (= test count). Keyed by the
   // namespaced endpoint key `<svc>:<fnName>` so services with overlapping
@@ -53,7 +54,7 @@ export function buildGraph(dataset?: GalaxyGraphDataset): GraphData {
       svc: s.svc,
       file: s.file,
       val: 60,
-      color: COLORS[s.svc],
+      color: serviceColor(s.svc),
       mutation: mutation.services[s.svc],
       ...(s.narrative ? { narrative: s.narrative } : {}),
     });
@@ -69,7 +70,7 @@ export function buildGraph(dataset?: GalaxyGraphDataset): GraphData {
       kind: "endpoint",
       svc: ep.svc,
       val: 14,
-      color: COLORS[ep.svc],
+      color: serviceColor(ep.svc),
       method: ep.method,
       path: ep.path,
       internal: !!ep.internal,
@@ -90,11 +91,15 @@ export function buildGraph(dataset?: GalaxyGraphDataset): GraphData {
       svc: t.svc,
       http: !!t.http,
       val: 4,
-      color: COLORS[t.svc],
+      color: serviceColor(t.svc),
     });
-    t.endpoints.forEach((epKey) => {
-      links.push({ source: t.id, target: "ep:" + epKey, kind: "tests" });
-    });
+    if (t.endpoints.length) {
+      t.endpoints.forEach((epKey) => {
+        links.push({ source: t.id, target: "ep:" + epKey, kind: "tests" });
+      });
+    } else {
+      links.push({ source: t.id, target: "svc:" + t.svc, kind: "tests" });
+    }
   });
 
   // Index TopicDef by topic name so each topic node can carry its

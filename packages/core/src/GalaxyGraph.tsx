@@ -20,15 +20,15 @@ const linkId = (e: LinkEnd) => (typeof e === "object" ? e.id : e);
 // Keep the instance as `any` for fluent calls; type at the I/O boundaries.
 type ForceGraphInstance = any;
 
-const CONTRACTS_BY_ID = new Map(CONTRACTS.map((c) => [c.id, c]));
-
 export interface GalaxyGraphProps {
   /** Normalized backend graph payload. If omitted, a small built-in demo dataset is rendered. */
   dataset?: GalaxyGraphDataset;
+  /** Heading shown in the summary panel. */
+  title?: string;
   className?: string;
 }
 
-export default function GalaxyGraph({ dataset, className }: GalaxyGraphProps) {
+export default function GalaxyGraph({ dataset, className, title = "Galaxy Graph - System Coverage" }: GalaxyGraphProps) {
   if (dataset) {
     setGalaxyGraphCatalog(dataset);
     setGalaxyGraphMutation(dataset.mutation);
@@ -48,7 +48,11 @@ export default function GalaxyGraph({ dataset, className }: GalaxyGraphProps) {
     showCross: true,
   });
 
-  const data = useMemo(() => buildGraph(), [dataset]);
+  const data = useMemo(() => buildGraph(dataset), [dataset]);
+  const contractsById = useMemo(
+    () => new Map((dataset?.contracts ?? CONTRACTS).map((c) => [c.id, c])),
+    [dataset]
+  );
   const nodeSvc = useMemo(
     () => Object.fromEntries(data.nodes.map((n) => [n.id, n.svc])),
     [data.nodes]
@@ -104,12 +108,12 @@ export default function GalaxyGraph({ dataset, className }: GalaxyGraphProps) {
       })
       .linkLabel((l: GraphLink) => {
         if (!l.contractId) return "";
-        const c = CONTRACTS_BY_ID.get(l.contractId);
+        const c = contractsById.get(l.contractId);
         return c ? contractLinkTooltip(c) : "";
       })
       .onLinkClick((l: GraphLink) => {
         if (!l.contractId) return;
-        const c = CONTRACTS_BY_ID.get(l.contractId);
+        const c = contractsById.get(l.contractId);
         if (!c) return;
         setSelection({ kind: "contract", contract: c });
         focusContract(c);
@@ -217,8 +221,7 @@ export default function GalaxyGraph({ dataset, className }: GalaxyGraphProps) {
       ringMeshesRef.current = [];
       bondMeshesRef.current = [];
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [contractsById, data]);
 
   useEffect(() => {
     const Graph = graphRef.current as any;
@@ -263,7 +266,7 @@ export default function GalaxyGraph({ dataset, className }: GalaxyGraphProps) {
   return (
     <>
       <div ref={containerRef} style={{ position: "absolute", inset: 0 }} />
-      <Header onSelectService={onSelectService} onSelectContract={onSelectContract} />
+      <Header title={title} onSelectService={onSelectService} onSelectContract={onSelectContract} />
       <Legend filters={filters} onChange={setFilters} compact={selection !== null} />
       {selection === null && <CategoryLegend />}
       <InfoCard selection={selection} />

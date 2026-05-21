@@ -17,7 +17,7 @@
     "./style.css": "./dist/style.css"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json && cp src/style.css dist/style.css",
+    "build": "tsc -p tsconfig.json && node -e \"require('fs').copyFileSync('src/style.css','dist/style.css')\"",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
