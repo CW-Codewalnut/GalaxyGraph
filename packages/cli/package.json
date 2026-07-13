@@ -9,7 +9,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc -p tsconfig.json && chmod +x dist/index.js",
+    "build": "tsc -b tsconfig.json --force && node -e \"require('fs').chmodSync('dist/index.js', 0o755)\"",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
@@ -31,7 +31,8 @@
     "galaxy-graph",
     "cli",
     "architecture",
-    "encore"
+    "encore",
+    "grails"
   ],
   "files": [
     "dist",

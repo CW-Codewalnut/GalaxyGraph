@@ -5,6 +5,7 @@ import { mutColor, mutLabel, displayName, COLORS, CONTRACT_TOPIC_COLOR } from ".
 import type { ContractDef } from "./types";
 
 interface Props {
+  title?: string;
   /** Called when the user clicks a service row. Receiver is expected to
    *  focus the corresponding `svc:<name>` node in the 3D graph. */
   onSelectService?: (svc: string) => void;
@@ -13,9 +14,10 @@ interface Props {
   onSelectContract?: (contract: ContractDef) => void;
 }
 
-export default function Header({ onSelectService, onSelectContract }: Props) {
+export default function Header({ title = "Galaxy Graph - System Coverage", onSelectService, onSelectContract }: Props) {
   const agg = MUTATION.aggregate;
   const aggColor = mutColor(agg.score);
+  const hasMutationData = agg.total > 0;
   const [showSummary, setShowSummary] = useState(true);
   const [showServices, setShowServices] = useState(true);
   const [showContracts, setShowContracts] = useState(false);
@@ -35,7 +37,7 @@ export default function Header({ onSelectService, onSelectContract }: Props) {
         overflowY: "auto",
       }}
     >
-      <h1>Oneness Platform · System Coverage</h1>
+      <h1>{title}</h1>
 
       <SectionToggle
         label="Summary"
@@ -44,20 +46,35 @@ export default function Header({ onSelectService, onSelectContract }: Props) {
       />
       {showSummary && (
         <>
-          <div className="big">
-            <span style={{ color: aggColor }}>{Math.round(agg.score)}</span>
-            <span className="pct">%</span>
-          </div>
-          <div>
-            <span
-              className="status-pill"
-              style={{ color: aggColor, background: aggColor + "22", border: `1px solid ${aggColor}` }}
-            >
-              {mutLabel(agg.score)}
-            </span>
-          </div>
+          {hasMutationData ? (
+            <>
+              <div className="big">
+                <span style={{ color: aggColor }}>{Math.round(agg.score)}</span>
+                <span className="pct">%</span>
+              </div>
+              <div>
+                <span
+                  className="status-pill"
+                  style={{ color: aggColor, background: aggColor + "22", border: `1px solid ${aggColor}` }}
+                >
+                  {mutLabel(agg.score)}
+                </span>
+              </div>
+            </>
+          ) : (
+            <div>
+              <span
+                className="status-pill"
+                style={{ color: "#b0b6c9", background: "#5c637022", border: "1px solid #5c6370" }}
+              >
+                No mutation data
+              </span>
+            </div>
+          )}
           <div className="muted" style={{ marginTop: 6, fontSize: 12 }}>
-            Mutation score = % of injected bugs caught by tests. Higher is better.
+            {hasMutationData
+              ? "Mutation score = % of injected bugs caught by tests. Higher is better."
+              : "No Stryker-style mutation report was found for this dataset."}
           </div>
         </>
       )}

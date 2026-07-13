@@ -3,25 +3,25 @@
 Copy/paste this into Hermes as a `/goal` command from a session with access to the local repos.
 
 ```text
-/goal Make Galaxy Graph genuinely open-source ready, comparable in polish and trustworthiness to DeepClaude, while preserving Oneness-Platform untouched unless explicitly approved.
+/goal Make Galaxy Graph genuinely open-source ready, comparable in polish and trustworthiness to established open-source developer tools, while preserving any validation app untouched unless explicitly approved.
 
 Context:
 - New local repo: /Users/agents/Agents/Neo/workspace/repos/personal/galaxy-graph
-- Source app repo, read-only for this goal: /Users/agents/Agents/Neo/workspace/repos/personal/Oneness-Platform
+- Optional source app repo, read-only for this goal: /path/to/validation-app
 - Current Galaxy Graph extraction commit: 4daf849 feat: extract Galaxy Graph open source packages
-- Product goal: Galaxy Graph is a backend-agnostic visualization tool for architecture, service intent, tests, mutation confidence, contracts, event topics, and semantic JSDoc/TSDoc. It should become standalone OSS IP that Oneness can later consume as a package.
-- Desired quality bar: DeepClaude-style public repo readiness — clear positioning, badges, verified demo media, install docs, CI, tests, package metadata, security hygiene, and honest caveats.
+- Product goal: Galaxy Graph is a backend-agnostic visualization tool for architecture, service intent, tests, mutation confidence, contracts, event topics, and semantic JSDoc/TSDoc. It should become standalone OSS IP that any app can consume as a package.
+- Desired quality bar: polished public repo readiness — clear positioning, badges, verified demo media, install docs, CI, tests, package metadata, security hygiene, and honest caveats.
 
 Hard constraints:
-- Do not modify Oneness-Platform in this goal. Use it only as a read-only validation target for adapters/CLI.
+- Do not modify the validation app in this goal. Use it only as a read-only validation target for adapters/CLI.
 - Do not publish, create GitHub remotes, push, or mutate GitHub until Ben explicitly approves.
-- Do not include private Oneness data as default sample/demo data. Use sanitized toy/sample datasets or generated public-safe fixtures.
+- Do not include private app data as default sample/demo data. Use sanitized toy/sample datasets or generated public-safe fixtures.
 - Keep secrets out of files, process args, docs, screenshots, and final reports.
 - Preserve repo hygiene: inspect git status before edits, keep generated build outputs ignored, and finish with clean committed changes in galaxy-graph.
 
 Mission:
-1. Audit the current galaxy-graph repo against DeepClaude-style OSS readiness.
-2. Add DeepClaude-quality README polish:
+1. Audit the current galaxy-graph repo against polished OSS readiness.
+2. Add high-quality README polish:
    - centered hero section;
    - badges for CI/license/npm or pre-public placeholders where a remote is not yet created;
    - concise product pitch;
@@ -53,7 +53,7 @@ Mission:
    - schema/buildGraph tests;
    - JSDoc semantic extraction tests;
    - Stryker adapter tests;
-   - Encore adapter fixture tests using sanitized miniature fixture, not Oneness private data;
+   - Encore adapter fixture tests using sanitized miniature fixture, not private app data;
    - CLI smoke test that writes graph JSON to a temp output.
 7. Improve adapter parity enough for credible MVP:
    - Encore services/endpoints/topics already work; preserve that;
@@ -74,7 +74,7 @@ Mission:
     - npm audit result recorded;
     - npm pack --dry-run for publishable packages;
     - CLI generation against sanitized fixture;
-    - optional read-only smoke against Oneness-Platform without writing into Oneness.
+    - optional read-only smoke against a validation app without writing into it.
 11. Commit cohesive changes locally in galaxy-graph with conventional commit messages.
 12. Final report must include:
     - what changed;
@@ -85,5 +85,5 @@ Mission:
 
 Definition of done:
 - Galaxy Graph can be shown to Ben as a credible open-source repo candidate with polished README/docs, tests, CI config, package metadata, verified demo media or explicit reason if deferred, and clean local git status after committing.
-- Oneness-Platform remains clean and unmodified.
+- Any validation app remains clean and unmodified.
 ```
